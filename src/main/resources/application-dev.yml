@@ -1,0 +1,9 @@
+spring:
+  config:
+    # Читаем тот же .env, что и docker compose. [.properties] говорит Spring, в каком формате файл.
+    # optional: если .env нет, приложение всё равно стартует (переменные могут прийти из окружения)
+    import: optional:file:.env[.properties]
+
+logging:
+  level:
+    com.fishing.backend: DEBUG

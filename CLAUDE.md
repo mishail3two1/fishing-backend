@@ -227,8 +227,8 @@ Swagger UI после запуска: `/swagger-ui.html` (путь зависи�
 ## 12. План работ
 
 **Этап 1. Фундамент** (блок A)
-- [ ] Каркас Spring Boot 4 + Maven Wrapper, `pom.xml`, структура пакетов
-- [ ] `docker-compose.yml` (Postgres+PostGIS), `.env.example`, `.gitignore`, `application.yml` (+профили)
+- [x] Каркас Spring Boot 4 + Maven Wrapper, `pom.xml`, структура пакетов
+- [x] `docker-compose.yml` (Postgres+PostGIS), `.env.example`, `.gitignore`, `application.yml` (+профили)
 - [ ] Flyway: применяется `V1__init_schema.sql`
 - [ ] Глобальная обработка ошибок (ProblemDetail), springdoc
 - [ ] Первый эндпоинт `GET /water-bodies` на тестовых данных
@@ -254,6 +254,6 @@ push-уведомления, чек-листы сборов, групповой 
 
 Обновляй этот раздел в конце каждой выполненной задачи (одна-две строки: что сделано, что дальше).
 
-- Сделано: заготовка Spring Initializr (Boot 4.1.1, пакет `com.fishing.backend`), добавлен `CLAUDE.md`.
-  `V1__init_schema.sql` готов, войдёт в задачу про Flyway.
-- Следующий шаг: Этап 1, каркас проекта.
+- Сделано: каркас (JDK 25, Boot 4.1.1, зависимости стека, Testcontainers с PostGIS); локальное окружение
+  (`docker-compose.yml`, `.env.example`, `application.yml` + профили `dev`/`prod`, dev читает `.env`).
+- Следующий шаг: Этап 1, Flyway и `V1__init_schema.sql`.
