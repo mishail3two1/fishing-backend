@@ -15,12 +15,3 @@ spring:
     # не держим соединение с БД открытым до конца HTTP-запроса: все запросы к БД делает сервис
     open-in-view: false
 
-# Свои настройки приложения. Будут привязаны к классам @ConfigurationProperties в задачах, где понадобятся
-app:
-  jwt:
-    secret: ${JWT_SECRET}
-    ttl-hours: ${JWT_TTL_HOURS:168}
-  storage:
-    path: ${STORAGE_PATH}
-  cors:
-    allowed-origin: ${CORS_ALLOWED_ORIGIN}
