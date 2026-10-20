@@ -242,7 +242,7 @@ Swagger UI после запуска: `/swagger-ui.html` (путь зависи�
 - [x] `docker-compose.yml` (Postgres+PostGIS), `.env.example`, `.gitignore`, `application.yml` (+профили)
 - [x] Flyway: применяется `V1__init_schema.sql`
 - [x] Глобальная обработка ошибок (ProblemDetail), springdoc
-- [ ] Первый эндпоинт `GET /water-bodies` на тестовых данных
+- [x] Первый эндпоинт `GET /water-bodies` на тестовых данных
 
 **Этап 2. Сквозной сценарий**
 - [ ] Регистрация, вход, JWT, Spring Security (A)
@@ -265,5 +265,5 @@ push-уведомления, чек-листы сборов, групповой 
 
 Обновляй этот раздел в конце каждой выполненной задачи (одна-две строки: что сделано, что дальше).
 
-- Сделано: каркас, окружение, Flyway (V1), единый формат ошибок ProblemDetail (GlobalExceptionHandler), название API в Swagger.
-- Следующий шаг: Этап 1, первый эндпоинт GET /api/v1/water-bodies.
+- Сделано: Этап 1 завершён — каркас, окружение, Flyway (V1), ProblemDetail, Swagger, GET /api/v1/water-bodies (опубликованные водоёмы для карты).
+- Следующий шаг: Этап 2 — фильтр водоёмов по области карты (bbox) и карточка водоёма; затем регистрация и JWT.
