@@ -241,7 +241,7 @@ Swagger UI после запуска: `/swagger-ui.html` (путь зависи�
 - [x] Каркас Spring Boot 4 + Maven Wrapper, `pom.xml`, структура пакетов
 - [x] `docker-compose.yml` (Postgres+PostGIS), `.env.example`, `.gitignore`, `application.yml` (+профили)
 - [x] Flyway: применяется `V1__init_schema.sql`
-- [ ] Глобальная обработка ошибок (ProblemDetail), springdoc
+- [x] Глобальная обработка ошибок (ProblemDetail), springdoc
 - [ ] Первый эндпоинт `GET /water-bodies` на тестовых данных
 
 **Этап 2. Сквозной сценарий**
@@ -265,5 +265,5 @@ push-уведомления, чек-листы сборов, групповой 
 
 Обновляй этот раздел в конце каждой выполненной задачи (одна-две строки: что сделано, что дальше).
 
-- Сделано: каркас, окружение, Flyway применяет V1__init_schema.sql (тест FlywayMigrationTest).
-- Следующий шаг: Этап 1, глобальная обработка ошибок (ProblemDetail) и springdoc.
+- Сделано: каркас, окружение, Flyway (V1), единый формат ошибок ProblemDetail (GlobalExceptionHandler), название API в Swagger.
+- Следующий шаг: Этап 1, первый эндпоинт GET /api/v1/water-bodies.
