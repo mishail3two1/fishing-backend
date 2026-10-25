@@ -34,7 +34,7 @@ class WaterBodyControllerTest {
                 ('Черновик', 'draft', 'POND', ST_SetSRID(ST_MakePoint(61.0, 55.0), 4326), false)
                 """);
 
-        mockMvc.perform(get("/api/v1/water-bodies"))
+        mockMvc.perform(get("/api/v1/water-bodies").param("bbox", "61.0,54.9,61.8,55.4"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(jsonPath("$[0].name").value("Озеро Смолино"))

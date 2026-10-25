@@ -17,9 +17,9 @@ public class WaterBodyService {
     }
 
     @Transactional(readOnly = true)
-    public List<WaterBodyMapItem> findPublished() {
+    public List<WaterBodyMapItem> findPublishedInBbox(double minLon, double minLat, double maxLon, double maxLat) {
         List<WaterBodyMapItem> result = new ArrayList<>();
-        for (WaterBodyEntity waterBody : repository.findAllByIsPublishedTrue()) {
+        for (WaterBodyEntity waterBody : repository.findPublishedInBbox(minLon,minLat,maxLon,maxLat)) {
             // в PostGIS у точки x = долгота, y = широта
             double lat = waterBody.getLocation().getY();
             double lon = waterBody.getLocation().getX();
