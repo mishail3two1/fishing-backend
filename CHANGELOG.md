@@ -13,11 +13,12 @@
     "description": "Озеро в черте города", "district": "Челябинск",
     "accessType": "FREE", "accessNotes": "Бесплатно",
     "hasParking": true, "parkingNotes": "У пляжа",
-    "rulesNotes": "Весной с лодок нельзя", "verifiedAt": "2026-10-20T10:00:00Z"
+    "rulesNotes": "Весной с лодок нельзя", "verifiedAt": "2026-10-26T05:33:25.536676Z"
   }
   ```
 - `accessType`: `FREE`, `PAID`, `PERMIT`, `UNKNOWN`. `hasParking` может быть `null` — «неизвестно»,
   это не то же самое, что `false`. Текстовые поля и `verifiedAt` тоже могут быть `null`.
+  `verifiedAt` — ISO-8601 в UTC, доли секунды могут быть, а могут отсутствовать.
 - Водоём не найден или не опубликован → `404` ProblemDetail; нечисловой `id` → `400`.
 - Рыба, последние уловы и погода появятся в карточке позже, новыми полями.
   
