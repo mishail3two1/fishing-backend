@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface WaterBodyRepository extends JpaRepository<WaterBodyEntity, Long> {
 
@@ -20,4 +21,6 @@ public interface WaterBodyRepository extends JpaRepository<WaterBodyEntity, Long
                                               @Param("minLat") double minLat,
                                               @Param("maxLon") double maxLon,
                                               @Param("maxLat") double maxLat);
+
+    Optional<WaterBodyEntity> findByIdAndIsPublishedTrue(Long id);
 }
