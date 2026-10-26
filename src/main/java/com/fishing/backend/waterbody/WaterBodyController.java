@@ -1,13 +1,12 @@
 package com.fishing.backend.waterbody;
 
+import com.fishing.backend.waterbody.dto.WaterBodyCard;
 import com.fishing.backend.waterbody.dto.WaterBodyMapItem;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -46,5 +45,14 @@ public class WaterBodyController {
                     "bbox вне допустимых границ или min не меньше max");
         }
         return service.findPublishedInBbox(minLon, minLat, maxLon, maxLat);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Карточка опубликованного водоёма")
+    @ApiResponse(responseCode = "200", description = "Карточка найдена")
+    @ApiResponse(responseCode = "404", description = "Водоём не найден или не опубликован")
+    public WaterBodyCard card(@PathVariable Long id) {
+        return service.findPublishedCard(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Водоём не найден"));
     }
 }
