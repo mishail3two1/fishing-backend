@@ -39,6 +39,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/water-bodies", "/api/v1/water-bodies/*").permitAll()
                         .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/fish-species").permitAll()
                         .anyRequest().authenticated())
                 // токен из заголовка Authorization: Bearer проверяет Spring Security (подпись и срок) через JwtDecoder
                 .oauth2ResourceServer(oauth2 -> oauth2
