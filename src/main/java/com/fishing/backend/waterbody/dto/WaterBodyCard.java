@@ -5,8 +5,9 @@ import com.fishing.backend.waterbody.AccessType;
 import com.fishing.backend.waterbody.WaterType;
 
 import java.time.Instant;
+import java.util.List;
 
-// Карточка водоёма. Рыба, последние уловы и погода добавятся отдельными задачами.
+// Карточка водоёма. Последние уловы и погода добавятся отдельными задачами.
 // data_source не отдаём: источники данных видят только админы.
 public record WaterBodyCard(
         Long id,
@@ -21,5 +22,6 @@ public record WaterBodyCard(
         Boolean hasParking,
         String parkingNotes,
         String rulesNotes,
-        Instant verifiedAt) {
+        Instant verifiedAt,
+        List<WaterBodyFishItem> fish){
 }

@@ -4,7 +4,11 @@ import com.fishing.backend.waterbody.dto.WaterBodyCard;
 import com.fishing.backend.waterbody.dto.WaterBodyMapItem;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.fishing.backend.waterbody.dto.WaterBodyFishItem;
 
+import java.text.Collator;
+import java.util.Comparator;
+import java.util.Locale;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +51,21 @@ public class WaterBodyService {
                         waterBody.getHasParking(),
                         waterBody.getParkingNotes(),
                         waterBody.getRulesNotes(),
-                        waterBody.getVerifiedAt()));
+                        waterBody.getVerifiedAt(),
+                        toFishItems(waterBody.getFish())));
+    }
+
+    // видов в одном водоёме единицы, и они уже загружены, поэтому сортируем в Java;
+    // Collator — по правилам русского языка (по кодам Unicode заглавная «Ё» стоит раньше «А»)
+    private List<WaterBodyFishItem> toFishItems(List<WaterBodyFish> fish) {
+        Collator russian = Collator.getInstance(Locale.forLanguageTag("ru"));
+        return fish.stream()
+                .map(item -> new WaterBodyFishItem(
+                        item.getSpecies().getId(),
+                        item.getSpecies().getNameRu(),
+                        item.getSpecies().isProtected(),
+                        item.getAbundance()))
+                .sorted(Comparator.comparing(WaterBodyFishItem::nameRu, russian))
+                .toList();
     }
 }

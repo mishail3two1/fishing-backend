@@ -139,4 +139,52 @@ class WaterBodyControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType("application/problem+json"));
     }
+
+    @Test
+    void returnsCardWithFishSortedInRussian() throws Exception {
+        jdbcTemplate.update("DELETE FROM water_bodies");
+        jdbcTemplate.update("DELETE FROM fish_species");
+        Long id = jdbcTemplate.queryForObject("""
+                INSERT INTO water_bodies (name, slug, water_type, location, is_published)
+                VALUES ('Озеро Смолино', 'smolino', 'LAKE', ST_SetSRID(ST_MakePoint(61.36, 55.13), 4326), true)
+                RETURNING id
+                """, Long.class);
+        jdbcTemplate.update("""
+                INSERT INTO fish_species (name_ru, slug, is_protected) VALUES
+                ('Карась', 'crucian', false), ('Ёрш', 'ruffe', false),
+                ('Стерлядь', 'sterlet', true), ('Елец', 'dace', false)
+                """);
+        jdbcTemplate.update("""
+                INSERT INTO water_body_fish (water_body_id, species_id, abundance)
+                SELECT ?, id, CASE slug WHEN 'crucian' THEN 'ABUNDANT' WHEN 'sterlet' THEN NULL ELSE 'COMMON' END
+                FROM fish_species
+                """, id);
+
+        // по кодам Unicode «Ёрш» встал бы первым; по-русски он между «Елец» и «Карась»
+        mockMvc.perform(get("/api/v1/water-bodies/" + id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.fish.length()").value(4))
+                .andExpect(jsonPath("$.fish[0].nameRu").value("Елец"))
+                .andExpect(jsonPath("$.fish[1].nameRu").value("Ёрш"))
+                .andExpect(jsonPath("$.fish[2].nameRu").value("Карась"))
+                .andExpect(jsonPath("$.fish[2].abundance").value("ABUNDANT"))
+                .andExpect(jsonPath("$.fish[3].nameRu").value("Стерлядь"))
+                .andExpect(jsonPath("$.fish[3].isProtected").value(true));
+    }
+
+    @Test
+    void returnsEmptyFishListWhenNoData() throws Exception {
+        jdbcTemplate.update("DELETE FROM water_bodies");
+        Long id = jdbcTemplate.queryForObject("""
+                INSERT INTO water_bodies (name, slug, water_type, location, is_published)
+                VALUES ('Озеро Смолино', 'smolino', 'LAKE', ST_SetSRID(ST_MakePoint(61.36, 55.13), 4326), true)
+                RETURNING id
+                """, Long.class);
+
+        // пустой массив, а не null: фронтенду не нужно проверять null
+        mockMvc.perform(get("/api/v1/water-bodies/" + id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.fish").isArray())
+                .andExpect(jsonPath("$.fish.length()").value(0));
+    }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.locationtech.jts.geom.Point;
 
 import java.time.Instant;
+import java.util.List;
 
 // Сущность таблицы water_bodies. Отображены поля для карты и карточки водоёма:
 // служебные колонки (slug, data_source, даты создания) Hibernate не читает.
@@ -38,6 +39,11 @@ public class WaterBodyEntity {
 
     private Instant verifiedAt;
 
+    // строки water_body_fish этого водоёма; загружаются при первом обращении, поэтому только внутри транзакции сервиса
+    @ElementCollection
+    @CollectionTable(name = "water_body_fish", joinColumns = @JoinColumn(name = "water_body_id"))
+    private List<WaterBodyFish> fish;
+
     private boolean isPublished;
 
     public Long getId() { return id; }
@@ -52,4 +58,5 @@ public class WaterBodyEntity {
     public String getParkingNotes() { return parkingNotes; }
     public String getRulesNotes() { return rulesNotes; }
     public Instant getVerifiedAt() { return verifiedAt; }
+    public List<WaterBodyFish> getFish() { return fish; }
 }
