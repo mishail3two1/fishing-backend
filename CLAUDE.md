@@ -164,7 +164,8 @@ com.fishing.backend
 | `GET /users/me` | профиль | пользователь | A |
 | `GET /water-bodies?bbox=minLon,minLat,maxLon,maxLat` | лёгкий список для карты | открыт | A |
 | `GET /water-bodies/{id}` | карточка: описание, рыба, условия, последние публичные уловы | открыт | A |
-| `POST/PUT/GET /admin/water-bodies...` | админский CRUD водоёмов (без DELETE: скрытие через `isPublished`) | ADMIN | A || `POST /admin/water-bodies/import` | импорт водоёмов из CSV | ADMIN | A |
+| `POST/PUT/GET /admin/water-bodies...` | админский CRUD водоёмов (без DELETE: скрытие через `isPublished`) | ADMIN | A |
+| `POST /admin/water-bodies/import` | импорт водоёмов из CSV | ADMIN | A |
 | `GET /fish-species` | справочник рыб | открыт | A |
 | `POST /catches` | создать улов (id можно прислать от клиента, повтор безопасен) | пользователь | Б |
 | `POST /catches/{id}/photos` | загрузить фото (multipart) | владелец | Б |
