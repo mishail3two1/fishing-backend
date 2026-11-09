@@ -23,4 +23,9 @@ public interface WaterBodyRepository extends JpaRepository<WaterBodyEntity, Long
                                               @Param("maxLat") double maxLat);
 
     Optional<WaterBodyEntity> findByIdAndIsPublishedTrue(Long id);
+
+    boolean existsBySlug(String slug);
+
+    // при изменении водоёма: занят ли slug каким-то ДРУГИМ водоёмом
+    boolean existsBySlugAndIdNot(String slug, Long id);
 }

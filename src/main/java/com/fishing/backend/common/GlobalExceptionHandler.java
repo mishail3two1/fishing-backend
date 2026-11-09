@@ -2,6 +2,7 @@ package com.fishing.backend.common;
 
 import com.fishing.backend.auth.EmailAlreadyUsedException;
 import com.fishing.backend.auth.InvalidCredentialsException;
+import com.fishing.backend.waterbody.SlugAlreadyUsedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -32,5 +33,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         // подробности только в лог сервера, клиенту отдаём нейтральный текст без внутренних деталей
         log.error("Unexpected error", ex);
         return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "Внутренняя ошибка сервера");
+    }
+
+    @ExceptionHandler(SlugAlreadyUsedException.class)
+    public ProblemDetail handleSlugAlreadyUsed() {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Водоём с таким slug уже есть");
     }
 }
